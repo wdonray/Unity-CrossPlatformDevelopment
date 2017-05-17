@@ -12,7 +12,7 @@ public class GameBehavior : MonoBehaviour
     public int dims;
     public int Box_Count;
     public GameObject Player;
-    
+
     public GameObject Goal;
     // Use this for initialization
     void Start()
@@ -28,6 +28,11 @@ public class GameBehavior : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Delete))
             Delete();
+        if (Player.transform.position.y < 1)
+        {
+            Load(2);
+            Player.transform.position = new Vector3(0, 1, 0);
+        }
     }
     void Log()
     {
@@ -57,7 +62,6 @@ public class GameBehavior : MonoBehaviour
         }
         Player.GetComponent<Rigidbody>().useGravity = true;
         Box_Count = Boxes.Count;
-        //Goal = Boxes[Random.Range(0, Boxes.Count)].transform.GetChild(0).gameObject;
         Goal = Boxes[0].transform.GetChild(0).gameObject;
         Log();
     }
@@ -67,15 +71,9 @@ public class GameBehavior : MonoBehaviour
         {
             DestroyImmediate(g);
         }
-       // Player.transform.position = new Vector3(5, 5, 5);
+    }
+    IEnumerator Load(int delay)
+    {
+        yield return new WaitForSeconds(delay);
     }
 }
-//if (Input.GetKeyDown(KeyCode.Space))
-//{
-//    //Log();
-//    //Box = Instantiate(Box_Prefab) as GameObject;
-//    //Boxes.Add(Box);
-//    //Box_Number++;
-//    //Renderer color = Box.GetComponent<Renderer>();
-//    //color.material.color = new Color(Random.Range(0, 255), Random.Range(0, 255), Random.Range(0, 255));
-//}
